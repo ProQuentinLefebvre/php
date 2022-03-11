@@ -2,11 +2,12 @@
   $host = 'localhost';
   $dbname = 'DB location';
   $username = 'root';
-  $password = '';
+  $password = 'password';
     
   $dsn = "mysql:host=$host;dbname=$dbname"; 
   // récupérer tous les utilisateurs
   $sql = "SELECT * FROM Client";
+
    
   try{
    $pdo = new PDO($dsn, $username, $password);
@@ -19,8 +20,8 @@
   }catch (PDOException $e){
     echo $e->getMessage();
   }
-?>
 
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,16 +48,16 @@
             </tr>
             </thead>
                 <td><a href="formulaire.php" title="formulaire pour la table Client" target="_blank">lien</a></td>
-                <td><?php echo $_POST['Id']; ?></td>
-                <td><?php echo $_POST['Nom'];; ?></td>
-                <td><?php echo $_POST['Prenom']; ?></td>
-                <td><?php echo $_POST['Email']; ?></td>
-                <td><?php echo $_POST['Phone']; ?></td>
-                <td><?php echo $_POST['Password']; ?></td>
-                <td><?php echo $_POST['Adresse']; ?></td>
-                <td><?php echo $_POST['Hote']; ?></td>
-                <td><?php echo $_POST['DateCreation']; ?></td>
-                <td><?php echo $_POST['DateModification']; ?></td>
+                <td><?=$id?></td>
+                <td><?php $Nom = $_POST['Nom'];?></td>
+                <td><?php $Prenom = $_POST['Prenom']; ?></td>
+                <td><?php $Email = $_POST['Email']; ?></td>
+                <td><?php $Phone = $_POST['Phone'];?></td>
+                <td><?php $Passwords = $_POST['Passwords']; ?></td>
+                <td><?php $Adresse = $_POST['Adresse']; ?></td>
+                <td><?php $Hote = $_POST['Hote']; ?></td>
+                <td><?php $DateCreation = $_POST['DateCreation']; ?></td>
+                <td><?php $DateModification = $_POST['DateModification'] ?></td>
             </table>
     </body>
 </html>

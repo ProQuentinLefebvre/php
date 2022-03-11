@@ -1,0 +1,146 @@
+ /*CREATE DATABASE Location
+    DEFAULT CHARACTER SET = 'utf8mb4';
+
+use Location;*/
+
+CREATE TABLE Client (
+Id int NOT NULL PRIMARY KEY auto_increment,
+Nom Varchar(50) NOT NULL,
+Prenom Varchar(50) NOT NULL,
+Email Varchar(50) NOT NULL UNIQUE,
+Phone Varchar(50) NOT NULL UNIQUE,
+Passwords Varchar(50) NOT NULL,
+Adresse Varchar(50),
+Hote int NOT NULL,
+    Constraint CHK_Hote check(Hote=0 or Hote=1),
+DateCreation DateTime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+DateModification DateTime NOT NULL  DEFAULT CURRENT_TIMESTAMP()
+);
+
+
+
+CREATE TABLE Typelmmo (
+Id int NOT NULL PRIMARY KEY auto_increment,
+Lib Varchar(255) Not null Unique,
+PrixMin int NOT NULL
+);
+
+
+
+CREATE TABLE Region(
+Id int NOT NULL PRIMARY KEY auto_increment,
+Nom Varchar(50) NOT NULL
+);
+
+
+CREATE TABLE Services(
+Id int NOT NULL PRIMARY KEY auto_increment,
+Libelle Varchar(250) NOT NULL UNIQUE
+);
+
+
+
+CREATE TABLE Piece(
+Id int NOT NULL PRIMARY KEY auto_increment,
+Nom Varchar(50) 
+);
+
+ALTER TABLE Piece
+Modify Nom VARCHAR(50) NOT NUll UNIQUE;
+
+
+CREATE TABLE Annonce (
+  Id int NOT NULL PRIMARY KEY auto_increment,
+  Publication int NOT NULL,
+    Constraint CHK_Publication check(Publication =0 or Publication=1),
+  PrixHT float NOT NULL, 
+  Adresse varchar(50) NOT NULL,
+  DateCreation DateTime NOT NULL, 
+  DateModification DateTime NOT NULL,
+  Client_Id int NOT NULL,
+  Typelmmo_Id int NOT NULL,
+  Region_Id  int NULL,
+  Constraint FK_AnnonceClient FOREIGN KEY(Client_Id) references Client(Id),
+  Constraint FK_AnnonceTypelmmo FOREIGN KEY(Typelmmo_Id) references Typelmmo(Id),
+  Constraint FK_AnnonceRegion FOREIGN KEY(Region_Id) references Region(Id)
+);
+
+CREATE TABLE Posseder (
+    Piece_Id int,
+    Annonce_Id int,
+    Quantite int NOT NULL,
+      Constraint CHK_Quantite check(Quantite =1),
+    Constraint FK_PossederPiece FOREIGN KEY(Piece_Id) references Piece(Id),
+    Constraint FK_PossederAnnonce FOREIGN KEY(Annonce_Id) references Annonce(Id),
+    PRIMARY KEY (Piece_Id, Annonce_Id)
+);
+
+CREATE TABLE Reservation (
+    DateDebut DateTime,
+    DateFin DateTime NOT NULL,
+    Annonce_Id int,
+    Client_Id int,
+    Constraint FK_ReservationAnnonce FOREIGN KEY(Annonce_Id) references Annonce(Id),
+    Constraint FK_ReservationClient FOREIGN KEY(Client_Id) references Client(Id),
+    PRIMARY KEY (Annonce_Id, Client_Id)
+);
+
+CREATE TABLE Photo (
+    Id int NOT NULL PRIMARY KEY auto_increment,
+    Chemin Varchar(255) NOT NULL,
+    Annonce_Id int,
+    Constraint FK_PhotoAnnonce FOREIGN KEY(Annonce_Id) references Annonce(Id)
+);
+
+CREATE TABLE Fournir (
+    Services_Id int,
+    Annonce_Id int,
+    Constraint FK_FournirServices FOREIGN KEY(Services_Id) references Services(Id),
+    Constraint FK_FournirAnnonce FOREIGN KEY(Annonce_Id) references Annonce(Id),
+    PRIMARY KEY (Services_Id, A,nnonce_Id)
+);
+
+CREATE TABLE TVA (
+     Id int NOT NULL PRIMARY KEY auto_increment,
+     Taux int NOT NULL,
+     DateDepart Datetime NOT NULL UNIQUE
+);
+
+CREATE TABLE Commentaire (
+    Id int NOT NULL PRIMARY KEY auto_increment,
+    Avis VarChar(50),
+    Note int NOT NULL,
+    DateModification DateTime NOT NULL,
+    Client_Id int,
+    Annonce_Id int,
+    Constraint FK_CommentaireCl,ient FOREIGN KEY(Client_Id) references Client(Id),
+    Constraint FK_CommentaireAnnonce FOREIGN KEY(Annonce_Id) references Annonce(Id)    
+);
+
+/* donnees de base */
+INSERT INTO Client (Id, Nom, Prenom, Email, Phone, Passwords, Adresse, Hote, DateCreation, DateModification)
+  VALUES(1, 'Administrateur', 'Administ', 'administrateur.admin@admin.com', '0000000000' , 'passwordd', '9 avenue de adresse', 0, '2022-02-03', '2022-02-04');
+
+Insert into Typelmmo (Id,Lib, PrixMin)
+  VALUES(1, 'appartement', 50);
+
+  INSERT INTO Region (Id,Nom)
+    VALUES(1, 'Auvergne');
+
+  INSERT INTO Services (Id, Libelle)
+    VALUES(1, 'Wifi');
+
+  INSERT INTO Piece (Id, Nom)
+    VALUES(1,'Chambre');
+
+  INSERT INTO Annonce (Id, Publication, PrixHT, Adresse, DateCreation, DateModification, Client_Id, Typelmmo_Id, Region_Id)
+    VALUES (1, 1 , 50, '9 avenue de l adresse', '2022-01-28', '2022-02-23', 1, 1 , 1);
+
+  INSERT INTO Posseder (Piece_Id, Annonce_Id, Quantite)
+    VALUES (1, 1, 1);
+
+  INSERT INTO Reservation (DateFin, Annonce_Id, Client_Id)
+    VALUES ('2022-02-23', 1 , 1);
+
+  INSERT INTO Fournir (Annonce_Id, Services_Id)
+    VALUES (1, 1); 
