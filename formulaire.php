@@ -1,8 +1,13 @@
 <?php
+ob_start();
+require_once "db_pdo.php";
+
 $id=$nom=$prenom=$email=$phone=$tel=$mdp=$adresse=$hote=$dc=$dm="";
 $idErr=$nomErr=$prenomErr=$emailErr=$telErr=$mdpErr=$adresseErr=$hoteErr=$dcErr=$dmErr="";
 $eff="";
 $ajout="";
+$parametre=$query="";
+$updateparametre="";
 if($_SERVER["REQUEST_METHOD"] =="POST"){ //POST//GET
     //VAR_DUMP($_POST);
     
@@ -57,44 +62,44 @@ if($_SERVER["REQUEST_METHOD"] =="POST"){ //POST//GET
 
     }
     if($btn=="Modifer"){
-        
-    }
-    $Ajout  = 'INSERT INTO Client(Id, Nom, Prenom, Email, Phone, Passwords, Adresse, DateCreation, DateModification) 
-        VALUES (:Id, :Nom, :Prenom, :Email, :Phone, :Passwords, :Adresse, :DateCreation, :DateModification)';
-
-    $paramètre = [
-        "Id" => $Id,
-        ":Nom" =>  $Nom,
-        ":Prenom" => $Prenom,
-        ":Email" => $Email,
-        ":Phone" => $Phone,
-        ":Passwords" => $Passwords,
-        ";Adresse" => $Adresse,
-        ":DateCreation" => $DateCreation,
-        "DateModification" => $DateModifcation
-
-    ];
-    db_connection();
-				$bRet = db_execute($ajout, $paramètre);	
-				db_close();
-
-    $update = "UPDATE 'Client' SET   Nom=:Nom, Prenom=:Prenom, Email=:Email, Phone=:Phone, 
+        $query = "UPDATE 'Client' SET   Nom=:Nom, Prenom=:Prenom, Email=:Email, Phone=:Phone, 
     Passwords=:Passwords, Adresse=:Adresse, DateCreation=:DateCreation, DateModification=:DateModification WHERE Id=:Id ";
     
-    $updateparamètre = [
-        "Id" => $Id,
-        ":Nom" =>  $Nom,
-        ":Prenom" => $Prenom,
-        ":Email" => $Email,
-        ":Phone" => $Phone,
-        ":Passwords" => $Passwords,
-        ";Adresse" => $Adresse,
-        ":DateCreation" => $DateCreation,
-        "DateModification" => $DateModifcation
+    $parametre = [
+        ":Id" => $id,
+        ":Nom" =>  $nom,
+        ":Prenom" => $prenom,
+        ":Email" => $email,
+        ":Phone" => $phone,
+        ":Passwords" => $mdp,
+        ":Adresse" => $adresse,
+        ":DateCreation" => $dc,
+        ":DateModification" => $dm
 
     ];
+    }
+
+    if($btn=="Créer"){
+        $query  = 'INSERT INTO Client(Id, Nom, Prenom, Email, Phone, Passwords, Adresse, DateCreation, DateModification) 
+        VALUES (:Id, :Nom, :Prenom, :Email, :Phone, :Passwords, :Adresse, :DateCreation, :DateModification)';
+
+    $parametre = [
+        ":Id" => $id,
+        ":Nom" =>  $nom,
+        ":Prenom" => $prenom,
+        ":Email" => $email,
+        ":Phone" => $phone,
+        ":Passwords" => $mdp,
+        ":Adresse" => $adresse,
+        ":DateCreation" => $dc,
+        ":DateModification" => $dm
+
+    ];
+    }
+
+
     db_connection();
-    $bRet = db_execute($update, $updateparamètre);	
+    $bRet = db_execute($query, $parametre);	
     db_close();
 }
 
@@ -107,7 +112,7 @@ if($_SERVER["REQUEST_METHOD"] =="POST"){ //POST//GET
         <title>Formulaire Client</title>
     </head>
 <body>
-<form novalidate action="formulaire.php" method="post">
+<form action="formulaire.php" method="post">
     <br>
     <p>
    Formulaire pour la table Client :
@@ -141,10 +146,9 @@ if($_SERVER["REQUEST_METHOD"] =="POST"){ //POST//GET
     <label for="DateModification">Date de Modification :</label>
     <input type="date" name="DateModification" id="DateModification" placeholder="jj/mm/aaaa heure:minutes" size="20" required value="<?=$dm?>"><?=$dmErr?>
     <br>
-    <input type="submit" name="btnsubmit" value="Effacer" />
-    <input type="submit" name="btnsubmit" value="Modifier" />
     <input type="submit" name="btnsubmit" value="Créer" />
-
+    <input type="submit" name="btnsubmit" value="Modifier" />
+    <input type="submit" name="btnsubmit" value="Effacer" />
     </p>
 </form>
 </body>
