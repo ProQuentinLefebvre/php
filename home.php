@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="home.css">
+        <!--<link rel="stylesheet" href="home.css">-->
         <title>location - Home</title>
     </head>
     <header>
@@ -21,7 +21,9 @@
     </header>
     <body>
      <?php
-        require_once ("login.php");
+      if(isset( $_SESSION['sess_user_name'])){
+          echo  $_SESSION['sess_user_name'];
+      }
     ?>  
     </body>
 </html>
