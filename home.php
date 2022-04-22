@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,11 +13,15 @@
         <div class="navbar">
             <ul>
                 <li><a href="home.php">Accueil</a></li>
-                <li><a href="location.php">Table Client</a></li>
-                <li><a href="formulaire.php">Formulaire Client</a></li>
+                <li><a href="Client.php">Client</a></li>
+                <li><a href="Region.php">Regions</a></li>
+
             </ul>
          </div>
     </header>
     <body>
+     <?php
+        require_once ("login.php");
+    ?>  
     </body>
 </html>
