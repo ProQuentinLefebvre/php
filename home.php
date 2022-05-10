@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +8,7 @@
     </head>
     <header>
         <div id="header">
-            <img src="chambre.jpg" width="100%" height="150px"></img>
+            <img src="chambre2.jpg" width="100%" height="150px"></img>
         </div>
         <div class="navbar">
             <ul>
