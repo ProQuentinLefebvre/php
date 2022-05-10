@@ -16,6 +16,11 @@ catch(PDOException $e)
     echo $e->getMessage();  
 }
 
+
+  if(isset( $_SESSION['sess_user_name'])){
+          echo  $_SESSION['sess_user_name'];
+      }
+    
 ?>
 
 <!DOCTYPE html>
