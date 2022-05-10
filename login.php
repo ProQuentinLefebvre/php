@@ -48,7 +48,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         <input type="password" class="form-control" id="password" name="password">
     </div>
     <button type="submit" class="btn btn-primary">Envoyer</button>
-    <a href="formulaire.php?action=create">inscription</a>
+    <a href="formulaireClient.php?action=create">inscription</a>
 </form>
 
 <!DOCTYPE html>
