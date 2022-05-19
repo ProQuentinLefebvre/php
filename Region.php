@@ -24,7 +24,7 @@ catch(PDOException $e)
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="location.css">
-        <title>Airbnb - Table Region</title>
+        <title>Location</title>
     </head>
     <header>
 		<div class="nav">
