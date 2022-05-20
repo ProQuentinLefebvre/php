@@ -1,43 +1,51 @@
-<?php 
-
-class Region{
+<?php
+class Region
+{
     private $_id = null;
-    private $_nom = null;
+    private $_name = null;
 
-    public function _construct($id, $nom){
-        
+    // 1 seul constructeur en php
+    public function __construct($id, $name)
+    {
         $this->setId($id);
-        $this->setNom($nom);
+        $this->setName($name);
     }
 
-    public function setId($id){
-        if (is_null($id)){
+    // Mutateur chargé de modifier l'attribut $_id.
+    public function setId($id)
+    {
+        if (is_null($id)) {
             return;
         }
         if (!is_numeric($id)) // S'il ne s'agit pas d'un integer
         {
-            trigger_error('Id||L\'id doit être un entier', E_USER_NOTICE);
-            return;
+            return false;
         }
         $this->_id = (int)$id;
+        return true;
     }
-    public function Id(){
+
+    public function Id()
+    {
         return $this->_id;
     }
 
-    public function setNom($nom){
-        if (is_null($nom)){
+    // Mutateur chargé de modifier l'attribut $_name.
+    public function setName($name)
+    {
+        if (is_null($name)) {
             return;
         }
-        if (!is_string($nom) || trim($nom)=="") // S'il ne s'agit pas d'une string
+        if (!is_string($name) || trim($name)=="") // S'il ne s'agit pas d'une string
         {
-            trigger_error('Name||Le nom est obligatoire', E_USER_NOTICE);
-            return;
+            return false;
         }
-        $this->_nom = trim($nom);
+        $this->_name = trim($name);
+        return true;
     }
 
-    public function Nom(){
-        return $this->_nom;
+    public function Name()
+    {
+        return $this->_name;
     }
 }
