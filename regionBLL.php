@@ -1,5 +1,5 @@
 <?php
-require_once "ObjetRegions.php";
+require_once "ObjetRegion.php";
 require_once "regionDAO.php";
 
 //CRUD Create-Read-Update-Delete
@@ -7,32 +7,79 @@ class RegionBLL
 {
     private $_udal = null;
 
+    private $_errors = [];
+
     public function __construct()
     {
         $this->_udal = new RegionDAO();
     }
-
-    public function listRegion()
+    
+    public function Errors()
     {
-        return $this->_udal->listRegion();
+        return $this->_errors;
     }
 
-    public function Create(Region $region)
+    public function Error($key)
     {
-        if (empty(trim($region->Nom()))) {
-            $this->_errors[] = "Nom is required";
+        if(array_key_exists($key, $this->_errors)){
+            return $this->_errors[$key];
         }
-       
-            }
-        }
+        return "";
+    }
 
-        return $this->_udal->Create($region);
-    
-
-    public function Update(Region $region)
+    public function dalErrors()
     {
-        if (empty(trim($usr->Nom()))) {
-            $this->_errors[] = "Name is required";
+        return $this->_udal->Errors();
+    }
+
+    public function listRegionbyId($id)
+    {
+        //TODO
+    }
+
+    public function listRegions()
+    {
+        //TODO
+    }
+
+    public function Create($name)
+    {
+        $this->_errors = array();
+        if (empty(trim($name))) {
+            $this->_errors["Name"] = "Name is required";
         }
+        // if(strlen( trim($name)<3 ...){
+        //     //error
+        // }
         
+        if (count($this->_errors) > 0) {
+            return -1;
         }
+
+       //TODO
+    }
+
+    public function Update($id, $name)
+    {
+        $this->_errors = array();
+        if (empty(trim($id))) {
+            $this->_errors["Id"] = "Id is required";
+        }
+        if (empty(trim($name))) {
+            $this->_errors["Name"] = "Name is required";
+        }
+
+        if (count($this->_errors) > 0) {
+            return -1;
+        }
+
+       //TODO
+    }
+
+    public function DeletebyId($id)
+    {
+        if(is_numeric($id)){
+            return $this->_udal->DeletebyId($id);
+        }
+    }
+}
